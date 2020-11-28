@@ -27,6 +27,10 @@ func main() {
 	if token == "" {
 		log.Fatal("SECRET not set")
 	}
+	user := getenv("GITHUB_USER", "")
+	if token == "" {
+		log.Fatal("SECRET not set")
+	}
 
 	ctx := context.Background()
 
@@ -49,7 +53,7 @@ func main() {
 	}
 
 	for {
-		repository,_,err := client.Repositories.List(ctx, "TheYkk" ,listOpt)
+		repository,_,err := client.Repositories.List(ctx, user ,listOpt)
 		if err != nil {
 			log.Fatal(err)
 		}
