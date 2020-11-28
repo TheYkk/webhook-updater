@@ -56,7 +56,7 @@ func main() {
 
 		for repoID,repo := range repository {
 			if !*repo.Fork && !*repo.Archived{
-				log.Printf("ID: %v Fork degil %s %s", (listOpt.ListOptions.Page * listOpt.ListOptions.PerPage) + repoID +1 , *repo.Owner.Login, *repo.Name)
+				log.Printf("ID: %v Is not fork %s %s", (listOpt.ListOptions.Page * listOpt.ListOptions.PerPage) + repoID +1 , *repo.Owner.Login, *repo.Name)
 
 				// ? List repo hooks
 				existHooks, _, errListHooks := client.Repositories.ListHooks(ctx, *repo.Owner.Login, *repo.Name, &github.ListOptions{})
@@ -70,7 +70,7 @@ func main() {
 				for _,hook := range existHooks {
 
 					if hook.Config["url"] ==  starHook.Config["url"]{
-						log.Print("Hook bulundu, Silinip yeninded olusturulacak")
+						log.Print("Hook is exist, deleting and recreating now")
 						_, _ = client.Repositories.DeleteHook(ctx, *repo.Owner.Login, *repo.Name, *hook.ID)
 
 						_, _, errHook := client.Repositories.CreateHook(ctx, *repo.Owner.Login, *repo.Name, starHook)
